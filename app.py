@@ -183,16 +183,21 @@ def retrieve(query, k=5):
 
 # ============================================================
 # GEMINI API
-# ============================================================
+# ==============================
+# Prioritas:
+# 1. Streamlit Secrets (untuk deployment)
+# 2. Environment variable (untuk Colab/local)
+# ==============================
 
-GEMINI_API_KEY = os.environ.get(
-    "GEMINI_API_KEY"
-)
+try:
+    GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
+except Exception:
+    GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 
-GEMINI_MODEL = os.environ.get(
-    "GEMINI_MODEL",
-    "gemini-3.8-flash"
-)
+try:
+    GEMINI_MODEL = st.secrets["GEMINI_MODEL"]
+except Exception:
+    GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
 
 if not GEMINI_API_KEY:
 
